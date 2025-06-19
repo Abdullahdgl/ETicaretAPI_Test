@@ -56,7 +56,7 @@ namespace ETicaretAPI.API.Controllers
 		public async Task<IActionResult> Get(string id)
 		{
 			Product product = await _productReadRepository.GetByIdAsync(id);
-			return Ok(product);
+			return Ok(product); 
 		}
 	}
 }
