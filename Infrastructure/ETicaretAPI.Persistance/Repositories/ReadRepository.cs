@@ -42,11 +42,23 @@ namespace ETicaretAPI.Persistance.Repositories
 		}
 
 		public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
-			=> await Table.FirstOrDefaultAsync(method);
+		//=> await Table.FirstOrDefaultAsync(method);
+		{
+			var query = Table.AsQueryable();
+			if(!tracking)
+				query = Table.AsNoTracking();
+			return await query.FirstOrDefaultAsync(method);
+		}
 
 		//find metodu ile 
 		public async Task<T> GetByIdAsync(string id, bool tracking = true)
-			=> await Table.FindAsync(Guid.Parse(id));
+		//=> await Table.FindAsync(Guid.Parse(id));
+		{
+			var query = Table.AsQueryable();
+			if (!tracking)
+				query = Table.AsNoTracking();
+			return await query.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+		}
 
 
 		#region GetByIdAsync marker patern ile alternatif 
